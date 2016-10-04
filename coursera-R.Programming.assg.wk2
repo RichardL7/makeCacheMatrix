@@ -1,0 +1,47 @@
+# R Programming week 2 assignment
+
+# makeCacheMatrix list containing a function to
+# 1. set the value of matrix
+# 2. get the value of matrix
+# 3. set the value of inverse matrix
+# 4. get the value of inverse matrix
+
+makeCacheMatrix<-function(x=matrix()) {
+  inVerse<-NULL
+  set<-function(y) {
+    x<<-y
+    inVerse<<-NULL
+  }
+  get<-function()x
+   setinverse<-function(inverse) inVerse<<-inverse
+   getinverse<-function() inVerse
+  list(set=set,get=get,
+	  setinverse = setinverse,
+	  getinverse = getinverse)
+  }
+  
+  
+# cacheSolve function returns the inverse value of matrix
+
+cacheSolve<-function(x) {
+  inVerse<-x$getinverse()
+  if(!is.null(inVerse)) {
+      message("getting cached data")
+  return(inVerse)
+  }
+  data<-x$get()
+  inVerse<-solve(data)
+  x$setinverse(inVerse)
+  inVerse
+  }
+  
+# Sample run:
+#> x<-matrix(1:4, nrow=2, ncol=2)
+#> m<-makeCacheMatrix(x)
+#> n<-cacheSolve(m)
+#> print(n)
+#
+#        [,1]   [,2]
+# [1,]  -2      1.5
+# [2,]   1     -0.5
+#>
